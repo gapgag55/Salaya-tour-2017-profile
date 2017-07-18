@@ -130,11 +130,7 @@ window.onload = function() {
             })
 
             range.addEventListener('input', function() {
-                x = 0;
-                y = 0;
-
-                moveX = x;
-                moveY = y;
+           
 
                 width =  (this.value/100) * image.width
                 height = (this.value/100) * image.height
@@ -249,17 +245,6 @@ window.onload = function() {
         var readURL = function() {
             var file   = fileButton.files[0];
             var reader = new FileReader();
-
-            function _base64ToArrayBuffer(base64) {
-                var binary_string = window.atob(base64.split(",")[1]);
-                var len = binary_string.length;
-                var bytes = new Uint8Array(len);
-                for (var i = 0; i < len; i++) {
-                bytes[i] = binary_string.charCodeAt(i);
-                }
-                return bytes.buffer;
-            }
-
             reader.onloadend = function() {
                 drawCanvas(this.result)
             }
@@ -275,7 +260,8 @@ window.onload = function() {
             image.src = url;
 
             image.onload = function() {
-                context.drawImage(image, 0, 0)
+          
+                context.drawImage(image, x, y)
                 drawFrame();
             }
 
