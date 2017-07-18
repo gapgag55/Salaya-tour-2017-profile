@@ -45,9 +45,8 @@ gulp.task('jshint', function() {
 
 // Ugligy JS
 gulp.task('compress', function() {
-//   return gulp.src('src/js/*.js')
-//     .pipe(uglify())
-//     .pipe(gulp.dest('js'));
+  return gulp.src('src/js/*.js')
+    .pipe(gulp.dest('js'));
     return true;
 });
 
