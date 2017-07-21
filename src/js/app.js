@@ -53,7 +53,7 @@ window.onload = function() {
                 drawFrame();
             }
 
-            frame.src = 'https://raw.githubusercontent.com/gapgag55/Salaya-tour-2017-profile/master/images/frame2.png';
+            frame.src = 'images/profile600.png';
 
         }
 
@@ -270,8 +270,8 @@ window.onload = function() {
         var drawFrame = function() {
             var x = 0;
             var y = 0;
-            var width  = 400;
-            var height = 400;
+            var width  = 600;
+            var height = 600;
             context.drawImage(frame, x, y, width, height);
         }
 
