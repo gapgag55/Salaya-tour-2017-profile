@@ -18,6 +18,7 @@ window.onload = function() {
         var frame;
         var image;
         var x, y;
+        var canvasSize = 0;
 
         this.init = function() {
             this.cacheHTML();
@@ -35,12 +36,13 @@ window.onload = function() {
             fileButton = document.getElementById('file');
             range      = document.getElementById('range');
             download   = document.getElementById('download');
+
+            var canvasSize = canvas.getAttribute('width');
             
             body       = document.body;
 
             canvasWidth  = canvas.width;
             canvasHeight = canvas.height;
-
 
             context.webkitImageSmoothingEnabled = false;
             context.mozImageSmoothingEnabled = false;
@@ -270,8 +272,8 @@ window.onload = function() {
         var drawFrame = function() {
             var x = 0;
             var y = 0;
-            var width  = 600;
-            var height = 600;
+            var width  = canvasSize;
+            var height = canvasSize;
             context.drawImage(frame, x, y, width, height);
         }
 
