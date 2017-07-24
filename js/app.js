@@ -20,6 +20,10 @@ window.onload = function() {
         var x = 0, y = 0;
         var canvasSize = 0;
 
+        // Move point = mousemove
+        var moveX;
+        var moveY;
+
         this.init = function() {
             this.cacheHTML();
             this.uploadImage();
@@ -77,10 +81,6 @@ window.onload = function() {
             // Start point = mousedown
             var dragX;
             var dragY;
-
-            // Move point = mousemove
-            var moveX = 0;
-            var moveY = 0;
 
             // Rezize 
             var width;
@@ -143,6 +143,8 @@ window.onload = function() {
                 
                 x = moveX + ((canvasSize/2) - (width/2))
                 y = moveY + ((canvasSize/2) - (height/2))
+
+                console.log(moveX, moveY)
  
                 context.clearRect(0, 0, canvasWidth, canvasHeight);
                 context.drawImage(image, x, y, width, height);
@@ -265,6 +267,9 @@ window.onload = function() {
         var drawCanvas = function(url) {
             image = new Image()
             image.src = url;
+
+            moveX = 0;
+            moveY = 0;
 
             image.onload = function() {
                 x = ((canvasSize/2) - (image.width/2))
