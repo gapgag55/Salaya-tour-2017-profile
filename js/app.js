@@ -17,7 +17,7 @@ window.onload = function() {
         var canvasHeight;
         var frame;
         var image;
-        var x, y;
+        var x = 0, y = 0;
         var canvasSize = 0;
 
         this.init = function() {
@@ -37,7 +37,7 @@ window.onload = function() {
             range      = document.getElementById('range');
             download   = document.getElementById('download');
 
-            var canvasSize = canvas.getAttribute('width');
+            canvasSize = canvas.width;
             
             body       = document.body;
 
@@ -79,8 +79,8 @@ window.onload = function() {
             var dragY;
 
             // Move point = mousemove
-            var moveX;
-            var moveY;
+            var moveX = 0;
+            var moveY = 0;
 
             // Rezize 
             var width;
@@ -101,17 +101,22 @@ window.onload = function() {
             })
 
             mouseup = mobileEvent("touchend", "mouseup");
-            body.addEventListener(mouseup, function() {
+            body.addEventListener(mouseup, function(e) {
                 isDragging = false;
-                x = moveX;
-                y = moveY;
+
+                if(e.target.id != "range") {
+                    x = moveX;
+                    y = moveY;
+
+                    moveX -= ((canvasSize/2) - (width/2))
+                    moveY -= ((canvasSize/2) - (height/2))
+                }
             })
 
             mousemove = mobileEvent("touchmove", "mousemove");
-            body.addEventListener(mousemove, function(e) {
-              
+            canvas.addEventListener(mousemove, function(e) {
+                
                 if(isDragging) {
-
                     if(mousemove == "touchmove") {
                         moveX = x + (e.touches[0].pageX - dragX);
                         moveY = y + (e.touches[0].pageY - dragY);
@@ -131,16 +136,19 @@ window.onload = function() {
                 }
             })
 
-            range.addEventListener('input', function() {
-           
+            range.addEventListener('input', function() { 
 
-                width =  (this.value/100) * image.width
-                height = (this.value/100) * image.height
-
+                width  = (this.value/50) * image.width
+                height = (this.value/50) * image.height
+                
+                x = moveX + ((canvasSize/2) - (width/2))
+                y = moveY + ((canvasSize/2) - (height/2))
+ 
                 context.clearRect(0, 0, canvasWidth, canvasHeight);
                 context.drawImage(image, x, y, width, height);
                 drawFrame();
             })
+
         }
 
         this.saveImage = function() {
@@ -256,13 +264,12 @@ window.onload = function() {
 
         var drawCanvas = function(url) {
             image = new Image()
-            x = 0;
-            y = 0;
-
             image.src = url;
 
             image.onload = function() {
-          
+                x = ((canvasSize/2) - (image.width/2))
+                y = ((canvasSize/2) - (image.height/2))
+
                 context.drawImage(image, x, y)
                 drawFrame();
             }
@@ -270,15 +277,10 @@ window.onload = function() {
         }
 
         var drawFrame = function() {
-            var x = 0;
-            var y = 0;
-            var width  = canvasSize;
-            var height = canvasSize;
-            context.drawImage(frame, x, y, width, height);
+            context.drawImage(frame, 0, 0, canvasSize, canvasSize);
         }
 
         var mobileEvent = function(mobile, browser) {
-            console.log()
             return (navigator.userAgent.match(/(Android|iPod|iPhone|iPad)/i)) ? mobile : browser;
         }
 
